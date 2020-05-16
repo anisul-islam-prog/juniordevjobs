@@ -13,10 +13,11 @@ const setAsync = promisify(client.set).bind(client);
 const baseURL = 'https://jobs.github.com/positions.json';
 
 async function fetchGithub() {
-
+    console.log('Fetching github jobs');
     let resultCount = 1, onPage = 0;
     const allJobs = [];
 
+    //get jobs from github
     while (resultCount > 0) {
         const res = await fetch(`${baseURL}/?page=${onPage}`);
         //TODO: Handle Promise rejection.
@@ -27,7 +28,29 @@ async function fetchGithub() {
         onPage++;
     }
     console.log('get' + allJobs.length + 'jobs');
-    const success = await setAsync('github', JSON.stringify(allJobs));
-    console.log({success});
+    //filter Algo
+    const jrJobs = allJobs.filter(job => {
+        const jobTitle = job.title.toLowerCase();
+        let isJunior = true;
+
+        //algo logic
+        if (
+            jobTitle.includes('senior') ||
+            jobTitle.includes('manager') ||
+            jobTitle.includes('sr') ||
+            jobTitle.includes('architect')
+        ) {
+            return isJunior = false;
+        }
+
+        return isJunior;
+    });
+    
+    console.log(`filter down to JrJobs ${jrJobs.length}`);
+
+
+    //set in redis   
+    const success = await setAsync('github', JSON.stringify(jrJobs));
+    console.log({ success });
 }
 module.exports = fetchGithub;
