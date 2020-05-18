@@ -2,11 +2,44 @@
 Using API services of GitHub jobs and filtering jobs for entry level jobs.
 
 ## Requirements:
+
 ```
 > Node
 > Redis-server
 ```
-## How to Install:
+
+## Install Packages:
+```
+npm i
+```
+
+## How to run:
+
+#### Start Redis-server 
+Open terminal and run the following code:
+
+```
+$ sudo service redis-server start
+```
+
+#### Run cron to fetch jobs and store in redis-server
+```
+node worker/index.js
+```
+
+#### Run backend
+```
+node api/index.js
+```
+
+#### Run Client React App
+```
+cd client/
+yarn start
+```
+
+## How to Deploy
+
 
 #### Install redis in windows 10:
 
