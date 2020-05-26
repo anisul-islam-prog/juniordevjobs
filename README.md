@@ -40,7 +40,12 @@ yarn start
 
 ## How to Deploy
 
-
+#### Requirements:
+```
+> Domian
+> Digital Ocean Droplet
+> Certbot for ngnix and ssl certificate
+```
 #### Install redis in windows 10:
 
 ##### How do I know if I have Windows 10 with WSL?
